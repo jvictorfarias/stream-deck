@@ -14,7 +14,7 @@ class StoreFileService {
       path.resolve(uploadConfig.uploadDirectory, filename),
     );
 
-    return filename;
+    return `${process.env.APP_URL}/files/${filename}`;
   }
 }
 
