@@ -1,8 +1,9 @@
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, useCallback } from 'react';
 
 import { MdLibraryMusic, MdPlayArrow } from 'react-icons/md';
 
 import { Container, FileInfo } from './styles';
+import api from '../../services/api';
 
 interface FileStoreProps extends HTMLAttributes<HTMLUListElement> {
   files: string[]
@@ -11,6 +12,14 @@ interface FileStoreProps extends HTMLAttributes<HTMLUListElement> {
 
 
 const FileStored: React.FC<FileStoreProps> = ({ files, onDelete }) => {
+  const handlePlay = useCallback((name: string) => {
+    api.get('/files/play', {
+      params: {
+        filename: name
+      }
+    })
+  }, [])
+
   return (
     <Container>
       {files.map(file => (
@@ -23,7 +32,7 @@ const FileStored: React.FC<FileStoreProps> = ({ files, onDelete }) => {
             </div>
           </FileInfo>
           <div>
-            <button type="button">
+            <button type="button" onClick={() => handlePlay(file)}>
               <MdPlayArrow size={64} color="#ffb86c" />
             </button>
           </div>

@@ -13,5 +13,6 @@ const filesController = new FilesController();
 filesRouter.post('/', upload.single('file'), filesController.create);
 filesRouter.get('/', filesController.index);
 filesRouter.delete('/', filesController.delete);
+filesRouter.get('/play', filesController.show);
 
 export default filesRouter;

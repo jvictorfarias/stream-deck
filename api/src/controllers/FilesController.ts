@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import StoreFileService from '../services/StoreFileService';
 import DeleteFileService from '../services/DeleteFileService';
 import ListFilesService from '../services/ListFilesService';
+import PlayMusicService from '../services/PlayMusicService';
 
 interface FileRequest extends Request {
   query: {
@@ -40,6 +41,21 @@ class FilesController {
     const files = await listFiles.execute();
 
     return response.status(200).json(files);
+  }
+
+  public async show(
+    request: FileRequest,
+    response: Response,
+  ): Promise<Response> {
+    const { filename } = request.query;
+
+    console.log(filename);
+
+    const playMusic = new PlayMusicService();
+
+    await playMusic.execute({ filename });
+
+    return response.status(204).json();
   }
 }
 
