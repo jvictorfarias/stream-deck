@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import StoreFileService from '../services/StoreFileService';
 import DeleteFileService from '../services/DeleteFileService';
+import ListFilesService from '../services/ListFilesService';
 
 interface FileRequest extends Request {
   query: {
@@ -31,6 +32,14 @@ class FilesController {
     await deleteFile.execute({ filename });
 
     return response.status(204).json();
+  }
+
+  public async index(_request: Request, response: Response): Promise<Response> {
+    const listFiles = new ListFilesService();
+
+    const files = await listFiles.execute();
+
+    return response.status(200).json(files);
   }
 }
 
