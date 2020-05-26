@@ -11,5 +11,6 @@ const filesRouter = Router();
 const filesController = new FilesController();
 
 filesRouter.post('/', upload.single('file'), filesController.create);
+filesRouter.delete('/', filesController.delete);
 
 export default filesRouter;
