@@ -1,9 +1,13 @@
 import React, { useCallback } from 'react';
-import Dropzone from 'react-dropzone';
+import Dropzone, { DropzoneInputProps } from 'react-dropzone';
 
 import { DropContainer, UploadMessage } from './styles';
 
-const Upload: React.FC = () => {
+interface UploadProps extends DropzoneInputProps {
+  onUpload(files: any): void
+}
+
+const Upload: React.FC<UploadProps> = ({ onUpload }) => {
 
   const renderDragMessage = useCallback((isDragActive: boolean, isDragReject: boolean) => {
     if (!isDragActive) return <UploadMessage type="info">Arraste arquivos aqui!</UploadMessage>
@@ -13,7 +17,7 @@ const Upload: React.FC = () => {
   }, [])
 
   return (
-    <Dropzone accept="audio/*" onDropAccepted={() => { }}>
+    <Dropzone accept="audio/*" onDropAccepted={onUpload}>
       {({ getRootProps, getInputProps, isDragActive, isDragReject }) => (
         <DropContainer {...getRootProps()} isDragActive={isDragActive}
           isDragReject={isDragReject}>
